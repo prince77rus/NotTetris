@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Tetris</title>
+       <style>
+           body { font-family: Arial, sans-serif; text-align: center; background: #000; color: #fff; }
+           canvas { background: #222; display: block; margin: 0 auto; }
+           h1 { margin-top: 20px; }
+       </style>
+   </head>
+   <body>
+       <h1>Tetris</h1>
+       <canvas id="tetris" width="300" height="600"></canvas>
+       <script>
+           const canvas = document.getElementById('tetris');
+           const context = canvas.getContext('2d');
+
+           const ROWS = 20;
+           const COLS = 10;
+           const BLOCK_SIZE = 30;
+
+           // Создаём поле
+           const createBoard = () => Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+
+           let board = createBoard();
+
+           // Рисуем блок
+           const drawBlock = (x, y, color) => {
+               context.fillStyle = color;
+               context.fillRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+               context.strokeStyle = '#000';
+               context.strokeRect(x * BLOCK_SIZE, y * BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+           };
+
+           // Рисуем поле
+           const drawBoard = () => {
+               board.forEach((row, y) => {
+                   row.forEach((value, x) => {
+                       if (value) {
+                           drawBlock(x, y, 'cyan');
+                       }
+                   });
+               });
+           };
+
+           // Основной цикл игры
+           const update = () => {
+               drawBoard();
+               requestAnimationFrame(update);
+           };
+
+           update();
+       </script>
+   </body>
+   </html>
